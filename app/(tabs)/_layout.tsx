@@ -10,7 +10,7 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="community"
+        name="index"
         options={{
           title: 'Community',
           tabBarIcon: ({ color, size }) => (
