@@ -27,18 +27,18 @@ export default function Header() {
 
       {/* Icons */}
       <View className="flex-row items-center space-x-6">
+
         <Pressable
           accessibilityRole="button"
           android_ripple={{ color: '#0CAA41' }} //happens only on android
-          className="p-1 rounded-full"
-        >
+          className="p-1 rounded-full">
           <Ionicons name="notifications-outline" size={24} color="#0CAA41" />
         </Pressable>
+      
         <Pressable
           accessibilityRole="button"
           android_ripple={{ color: '#0CAA41' }}
-          className="p-1 rounded-full"
-        >
+          className="p-1 rounded-full">
           <FontAwesome name="user-circle-o" size={24} color="#0CAA41" />
         </Pressable>
       </View>

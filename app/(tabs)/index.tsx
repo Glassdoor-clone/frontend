@@ -7,7 +7,9 @@ export default function CommunityScreen() {
 
   return (
     <View className="flex-1 bg-white dark:bg-neutral-900 px-4 pt-10">
+      
       <Header />
+      
 
       {/* Tab buttons */}
       <View className="flex-row justify-around mb-4">
