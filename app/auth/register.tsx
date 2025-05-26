@@ -42,17 +42,17 @@ const RegisterPage = () => {
     });
   };
 
-  const handleGoogleRegister = () => {
-    console.log('Google register pressed');
-  };
+  // const handleGoogleRegister = () => {
+  //   console.log('Google register pressed');
+  // };
 
-  const handleFacebookRegister = () => {
-    console.log('Facebook register pressed');
-  };
+  // const handleFacebookRegister = () => {
+  //   console.log('Facebook register pressed');
+  // };
 
-  const handleAppleRegister = () => {
-    console.log('Apple register pressed');
-  };
+  // const handleAppleRegister = () => {
+  //   console.log('Apple register pressed');
+  // };
 
   return (
     <SafeAreaView 
@@ -73,7 +73,7 @@ const RegisterPage = () => {
           <View style={styles.logoContainer}>
             <View style={styles.logoWrapper}>
               <Image
-                source={require('@/assets/images/fake-logo.jpg')}
+                source={require('@/assets/images/jobseek-logo.svg')}
                 style={styles.logo}
                 resizeMode="contain"
               />
