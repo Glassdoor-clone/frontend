@@ -66,7 +66,7 @@ const LoginPage = () => {
           <View style={styles.logoContainer}>
             <View style={styles.logoWrapper}>
               <Image
-                source={require('@/assets/images/fake-logo.jpg')}
+                source={require('@/assets/images/jobseek-logo.svg')}
                 style={styles.logo}
                 resizeMode="contain"
               />

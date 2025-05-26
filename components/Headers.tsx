@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { Link } from 'expo-router';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, useColorScheme } from 'react-native';
 
@@ -44,9 +45,11 @@ const Headers = () => {
 
 
       <View style={styles.rightSection}>
+        <Link href="/notifications" asChild>
         <TouchableOpacity style={styles.iconButton} onPress={() => console.log('Notification pressed')}>
           <Ionicons name="notifications-outline" size={24} color={iconColor} />
         </TouchableOpacity>
+        </Link>
 
         <TouchableOpacity style={styles.iconButton} onPress={() => console.log('Profile pressed')}>
           <Ionicons name="person-outline" size={24} color={iconColor} />
