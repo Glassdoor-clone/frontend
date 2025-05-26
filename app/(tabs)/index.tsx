@@ -1,18 +1,20 @@
-import Header from '@/components/Header';
+import Headers from '@/components/Headers';
+import SearchBar from '@/components/SearchBar';
 import { useState } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, SafeAreaView, Text, View } from 'react-native';
 
 export default function CommunityScreen() {
   const [activeTab, setActiveTab] = useState<'feed' | 'bowls'>('feed');
 
   return (
-    <View className="flex-1 bg-white dark:bg-neutral-900 px-4 pt-10">
+    <SafeAreaView className="flex-1 bg-white dark:bg-neutral-900">
       
-      <Header />
+      <Headers />
+      <SearchBar placeholder="Search conversations" />
       
 
       {/* Tab buttons */}
-      <View className="flex-row justify-around mb-4">
+      <View className="flex-row justify-around mb-4 mt-5">
         <Pressable onPress={() => setActiveTab('feed')}>
           <Text className={`text-lg ${activeTab === 'feed' ? 'text-green-600 font-bold' : 'text-gray-500 dark:text-gray-400'}`}>
             Feed
@@ -32,9 +34,9 @@ export default function CommunityScreen() {
         </View>
       ) : (
         <View>
-          <Text className="text-black dark:text-white">Boost content goes here</Text>
+          <Text className="text-black dark:text-white">Bowls content goes here</Text>
         </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 }
