@@ -238,7 +238,7 @@ const SalariesPage = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Headers />
-      <SearchBar />
+      <SearchBar placeholder='Search salaries' />
       <ScrollView 
         style={styles.content}
         contentContainerStyle={styles.scrollContainer}
