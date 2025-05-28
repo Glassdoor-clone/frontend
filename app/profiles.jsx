@@ -1,6 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -8,15 +7,13 @@ import {
   Text,
   TouchableOpacity,
   View,
+  useColorScheme,
 } from 'react-native';
 
 const ProfilePage = () => {
   const router = useRouter();
-  const [isDarkMode, setIsDarkMode] = useState(true);
-
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-  };
+  const colorScheme = useColorScheme();
+  const isDarkMode = colorScheme === 'dark';
 
   const theme = {
     background: isDarkMode ? '#171717' : '#FFFFFF',
@@ -24,7 +21,7 @@ const ProfilePage = () => {
     secondaryText: isDarkMode ? '#B0B0B0' : '#666666',
     cardBackground: isDarkMode ? '#2A2A2A' : '#F8F8F8',
     border: isDarkMode ? '#3A3A3A' : '#E0E0E0',
-    accent: '#007AFF',
+    accent: '#22C55E',
   };
 
   const ProfileItem = ({ icon, title, onPress }) => (
@@ -60,13 +57,7 @@ const ProfilePage = () => {
           <Ionicons name="chevron-back" size={28} color={theme.text} />
         </TouchableOpacity>
         <Text style={[styles.headerTitle, { color: theme.text }]}>Profile</Text>
-        <TouchableOpacity onPress={toggleTheme} style={styles.themeToggle}>
-          <Ionicons 
-            name={isDarkMode ? "sunny" : "moon"} 
-            size={24} 
-            color={theme.text} 
-          />
-        </TouchableOpacity>
+        <View style={styles.themeToggle} />
       </View>
 
       {/* User Info */}
