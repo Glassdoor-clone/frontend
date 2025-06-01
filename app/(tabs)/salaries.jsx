@@ -6,6 +6,7 @@ import { SafeAreaView, ScrollView, Text, TouchableOpacity, useColorScheme, View 
 const SalariesPage = () => {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
+
   
   // Extended salary data for load more functionality
   const allSalaryData = [
