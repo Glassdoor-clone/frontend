@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Jobseek",
-    "slug": "Jobseek",
+    "name": "JobSeek",
+    "slug": "JobSeek",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",

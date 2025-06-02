@@ -51,7 +51,7 @@ const Headers = () => {
         </TouchableOpacity>
         </Link>
 
-        <Link href="/profiles" asChild>
+        <Link href="/profile" asChild>
         <TouchableOpacity style={styles.iconButton} onPress={() => console.log('Profile pressed')}>
           <Ionicons name="person-outline" size={24} color={iconColor} />
         </TouchableOpacity>
