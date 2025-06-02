@@ -1,10 +1,17 @@
 import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
-import { StyleSheet, TextInput, View, useColorScheme } from 'react-native';
+import React, { useState } from 'react';
+import {
+  Keyboard,
+  StyleSheet,
+  TextInput,
+  View,
+  useColorScheme,
+} from 'react-native';
 
-const SearchBar = ({ placeholder = "Search jobs, companies..." }) => {
+const SearchBar = ({ placeholder = "Search jobs, companies...", onSearch }) => {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
+  const [query, setQuery] = useState('');
 
   const styles = StyleSheet.create({
     container: {
@@ -28,6 +35,13 @@ const SearchBar = ({ placeholder = "Search jobs, companies..." }) => {
     },
   });
 
+  const handleSubmit = () => {
+    if (onSearch) {
+      onSearch(query);
+    }
+    Keyboard.dismiss(); // hide keyboard after submit
+  };
+
   return (
     <View style={styles.container}>
       <Ionicons name="search-outline" size={20} color={isDark ? '#aaa' : '#555'} />
@@ -36,6 +50,10 @@ const SearchBar = ({ placeholder = "Search jobs, companies..." }) => {
         placeholder={placeholder}
         placeholderTextColor={isDark ? '#888' : '#999'}
         underlineColorAndroid="transparent"
+        value={query}
+        onChangeText={setQuery}
+        returnKeyType="search"
+        onSubmitEditing={handleSubmit}
       />
     </View>
   );
