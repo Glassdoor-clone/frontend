@@ -14,5 +14,5 @@
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
     "nativewind-env.d.ts"
-, "app/(tabs)/salaries.jsx", "app/profile.jsx", "app/notifications.jsx", "components/Headers.jsx", "app/profiles.jsx", "app/companies/[id].jsx", "components/SearchBar.jsx"  ]
+, "app/(tabs)/salaries/salarieapp/profiles.jsxofilapp/(tabs)/notifications.jsxtions.jsx", "components/Headerapp/(tabs)/profile/profiles.jsxfiles.jcomponents/SearchBar.tsxes/[id].jsx", "components/SearchBar.jsx"  ]
 }
