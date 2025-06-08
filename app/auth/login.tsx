@@ -333,6 +333,7 @@ const styles = StyleSheet.create({
   welcomeTitle: {
     fontSize: 32,
     fontWeight: '900',
+    fontFamily: 'Poppins',
     letterSpacing: 1,
     marginBottom: 8,
     textShadowOffset: { width: 0, height: 0 },
@@ -342,6 +343,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     marginBottom: 16,
+    fontFamily: 'Inter',
   },
   accentLine: {
     width: 60,

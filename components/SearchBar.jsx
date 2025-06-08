@@ -22,9 +22,10 @@ const SearchBar = ({ placeholder = "Search jobs, companies...", onSearch }) => {
       paddingHorizontal: 15,
       paddingVertical: 11,
       marginHorizontal: 20,
-      shadowColor: '#000',
-      shadowOpacity: 0.05,
-      shadowRadius: 2,
+     
+       // shadowColor: '#000',
+      // shadowOpacity: 0.05,
+      // shadowRadius: 2,
       elevation: 2,
     },
     input: {
@@ -46,6 +47,7 @@ const SearchBar = ({ placeholder = "Search jobs, companies...", onSearch }) => {
     <View style={styles.container}>
       <Ionicons name="search-outline" size={20} color={isDark ? '#aaa' : '#555'} />
       <TextInput
+        className='font-inter'
         style={styles.input}
         placeholder={placeholder}
         placeholderTextColor={isDark ? '#888' : '#999'}

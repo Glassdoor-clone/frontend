@@ -1,11 +1,12 @@
+import { BlurView } from 'expo-blur';
 import React from 'react';
 import {
   Dimensions,
   Image,
+  Pressable,
   SafeAreaView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
   useColorScheme,
 } from 'react-native';
@@ -32,7 +33,7 @@ const JobseekLogin = () => {
       ]}
     >
       <View style={styles.content}>
-        {/* Illustration with modern styling */}
+        {/* Image */}
         <View style={styles.imageContainer}>
           <View style={styles.imageWrapper}>
             <Image
@@ -43,7 +44,7 @@ const JobseekLogin = () => {
           </View>
         </View>
 
-        {/* Modern Title and Subtitle */}
+        {/* Title */}
         <View style={styles.textContainer}>
           <Text style={[
             styles.title, 
@@ -63,7 +64,7 @@ const JobseekLogin = () => {
           <View style={styles.accentLine} />
         </View>
 
-        {/* Terms and Privacy with modern styling */}
+        {/* Terms */}
         <View style={styles.termsContainer}>
           <Text style={[
             styles.termsText,
@@ -75,65 +76,75 @@ const JobseekLogin = () => {
           </Text>
         </View>
 
-        {/* Modern Buttons */}
+        {/* Buttons */}
         <View style={styles.buttonContainer}>
-          <TouchableOpacity 
-            style={[
-              styles.button, 
-              styles.primaryButton,
-              { backgroundColor: isDarkMode ? '#ffffff' : '#ffffff' }
-            ]} 
+          {/* Google */}
+          <Pressable
             onPress={handleGoogleLogin}
-            activeOpacity={0.8}
+            style={({ pressed }) => [
+              styles.button,
+              styles.primaryButton,
+              { backgroundColor: '#ffffff', opacity: pressed ? 0.9 : 1 }
+            ]}
+            accessibilityRole="button"
+            accessibilityLabel="Continue with Google"
           >
             <View style={styles.buttonContent}>
               <Image
                 source={require('@/assets/images/google-icon.png')}
                 style={styles.icon}
               />
-              <Text style={[
-                styles.primaryButtonText,
-                { color: isDarkMode ? '#1f2937' : '#1f2937' }
-              ]}>
+              <Text style={[styles.primaryButtonText, { color: '#1f2937' }]}>
                 Continue with Google
               </Text>
             </View>
-            <View style={styles.buttonGlow} />
-          </TouchableOpacity>
+          </Pressable>
 
-          <TouchableOpacity 
-            style={[
-              styles.button, 
-              styles.secondaryButton,
-              { 
-                backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.02)',
-                borderColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
-              }
-            ]} 
-            onPress={handleEmailLogin}
-            activeOpacity={0.8}
+          {/* Spacer */}
+          <View style={{ marginBottom: 20 }} />
+
+          {/* Email */}
+          <BlurView 
+            intensity={30} 
+            tint={isDarkMode ? 'dark' : 'light'} 
+            style={styles.blurWrapper}
           >
-            <View style={styles.buttonContent}>
-              <View style={[
-                styles.emailIconContainer,
-                { backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)' }
-              ]}>
+            <Pressable
+              onPress={handleEmailLogin}
+              style={({ pressed }) => [
+                styles.button,
+                {
+                  borderColor: isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+                  backgroundColor: 'transparent',
+                  borderWidth: 1,
+                  opacity: pressed ? 0.9 : 1,
+                }
+              ]}
+              accessibilityRole="button"
+              accessibilityLabel="Continue with Email"
+            >
+              <View style={styles.buttonContent}>
+                <View style={[
+                  styles.emailIconContainer,
+                  { backgroundColor: isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)' }
+                ]}>
+                  <Text style={[
+                    styles.emailIcon,
+                    { color: isDarkMode ? '#ffffff' : '#374151' }
+                  ]}>@</Text>
+                </View>
                 <Text style={[
-                  styles.emailIcon,
+                  styles.secondaryButtonText,
                   { color: isDarkMode ? '#ffffff' : '#374151' }
-                ]}>@</Text>
+                ]}>
+                  Continue with Email
+                </Text>
               </View>
-              <Text style={[
-                styles.secondaryButtonText,
-                { color: isDarkMode ? '#ffffff' : '#374151' }
-              ]}>
-                Continue with Email
-              </Text>
-            </View>
-          </TouchableOpacity>
+            </Pressable>
+          </BlurView>
         </View>
 
-        {/* Modern decorative elements */}
+        {/* Decorative dots */}
         <View style={styles.decorativeElements}>
           <View style={styles.dot} />
           <View style={[styles.dot, styles.dotDelayed]} />
@@ -167,11 +178,11 @@ const styles = StyleSheet.create({
     height: '100%',
     borderRadius: 24,
     overflow: 'hidden',
+    elevation: 15,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 20 },
     shadowOpacity: 0.3,
     shadowRadius: 30,
-    elevation: 15,
   },
   illustration: {
     width: '100%',
@@ -184,6 +195,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 40,
     fontWeight: '900',
+    fontFamily: 'Poppins',
     letterSpacing: 2,
     marginBottom: 12,
     textShadowOffset: { width: 0, height: 0 },
@@ -220,40 +232,28 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: '100%',
-    gap: 20,
   },
   button: {
     paddingVertical: 20,
     paddingHorizontal: 28,
     borderRadius: 16,
-    position: 'relative',
     overflow: 'hidden',
   },
   primaryButton: {
+    elevation: 8,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.15,
     shadowRadius: 16,
-    elevation: 8,
   },
-  secondaryButton: {
-    borderWidth: 1,
-    backdropFilter: 'blur(10px)',
+  blurWrapper: {
+    borderRadius: 16,
+    overflow: 'hidden',
   },
   buttonContent: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  buttonGlow: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(59, 130, 246, 0.1)',
-    borderRadius: 16,
-    opacity: 0,
   },
   icon: {
     width: 24,
@@ -285,7 +285,6 @@ const styles = StyleSheet.create({
     top: 80,
     right: 40,
     flexDirection: 'row',
-    gap: 8,
   },
   dot: {
     width: 6,
@@ -296,6 +295,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.8,
     shadowRadius: 4,
+    marginLeft: 8,
   },
   dotDelayed: {
     backgroundColor: 'rgba(59, 130, 246, 0.4)',

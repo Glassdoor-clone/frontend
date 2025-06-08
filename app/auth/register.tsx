@@ -435,6 +435,7 @@ const styles = StyleSheet.create({
   },
   welcomeTitle: {
     fontSize: 32,
+    fontFamily: 'Poppins',
     fontWeight: '900',
     letterSpacing: 1,
     marginBottom: 8,

@@ -1,92 +1,113 @@
-import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { useEffect, useState } from 'react';
 import {
+  Appearance,
   SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
-  useColorScheme,
+  View
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 
-const ProfilePage = () => {
+
+const ProfileScreen = () => {
+  const [isDarkMode, setIsDarkMode] = useState(Appearance.getColorScheme() === 'dark');
   const router = useRouter();
-  const colorScheme = useColorScheme();
-  const isDarkMode = colorScheme === 'dark';
+  useEffect(() => {
+    const subscription = Appearance.addChangeListener(({ colorScheme }) => {
+      setIsDarkMode(colorScheme === 'dark');
+    });
 
-  const theme = {
-    background: isDarkMode ? '#171717' : '#FFFFFF',
-    text: isDarkMode ? '#FFFFFF' : '#000000',
-    secondaryText: isDarkMode ? '#B0B0B0' : '#666666',
-    cardBackground: isDarkMode ? '#2A2A2A' : '#F8F8F8',
-    border: isDarkMode ? '#3A3A3A' : '#E0E0E0',
-    accent: '#22C55E',
+    return () => subscription?.remove();
+  }, []);
+
+  const themes = {
+    dark: {
+      background: '#171717',
+      text: '#ffffff',
+      subtext: '#a1a1aa',
+      iconColor: '#a1a1aa',
+      border: '#2a2a2a',
+      avatarBg: '#374151'
+    },
+    light: {
+      background: '#ffffff',
+      text: '#000000',
+      subtext: '#6b7280',
+      iconColor: '#6b7280',
+      border: '#f3f4f6',
+      avatarBg: '#e5e7eb'
+    }
   };
 
-  const ProfileItem = ({ icon, title, onPress }) => (
+  const currentTheme = isDarkMode ? themes.dark : themes.light;
+
+  const menuItems = [
+    { icon: 'user', label: 'Profile' },
+    { icon: 'bookmark', label: 'Saved jobs' },
+    { icon: 'sliders', label: 'Job preferences' },
+    { icon: 'user-check', label: 'Following' },
+    { icon: 'message-square', label: 'Posting activity' },
+    { icon: 'settings', label: 'Account settings' },
+    { icon: 'users', label: 'Demographics' }
+  ];
+
+  const renderMenuItem = ({ icon, label }) => (
     <TouchableOpacity 
-      style={[styles.profileItem, { backgroundColor: theme.cardBackground, borderColor: theme.border }]}
-      onPress={onPress}
+      key={label}
+      style={[styles.menuItem, { borderBottomColor: currentTheme.border }]}
       activeOpacity={0.7}
     >
-      <View style={styles.itemLeft}>
-        <Ionicons name={icon} size={24} color={theme.text} style={styles.itemIcon} />
-        <Text style={[styles.itemText, { color: theme.text }]}>{title}</Text>
+      <View style={styles.menuItemLeft}>
+        <Icon name={icon} size={20} color={currentTheme.iconColor} />
+        <Text style={[styles.menuItemText, { color: currentTheme.text }]}>
+          {label}
+        </Text>
       </View>
-      <Ionicons name="chevron-forward" size={20} color={theme.secondaryText} />
+      <Icon name="chevron-right" size={16} color={currentTheme.iconColor} />
     </TouchableOpacity>
   );
 
-  const UserAvatar = ({ initials }) => (
-    <View style={[styles.avatar, { backgroundColor: theme.accent }]}>
-      <Text style={styles.avatarText}>{initials}</Text>
-    </View>
-  );
-
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: currentTheme.background }]}>
       <StatusBar 
         barStyle={isDarkMode ? 'light-content' : 'dark-content'} 
-        backgroundColor={theme.background} 
+        backgroundColor={currentTheme.background}
       />
       
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <Ionicons name="chevron-back" size={28} color={theme.text} />
+        <TouchableOpacity style={styles.backButton} onPress={() => router.back()} activeOpacity={0.7}>
+          <Icon name="chevron-left" size={24} color={currentTheme.text} />
         </TouchableOpacity>
-        <Text style={[styles.headerTitle, { color: theme.text }]}>Profile</Text>
-        <View style={styles.themeToggle} />
+        <Text style={[styles.headerTitle, { color: currentTheme.text }]}>
+          Profile
+        </Text>
+        <View style={styles.headerRight} />
       </View>
 
-      {/* User Info */}
-      <View style={styles.userSection}>
-        <UserAvatar initials="JS" />
-        <Text style={[styles.userName, { color: theme.text }]}>
+      {/* Profile Info */}
+      <View style={styles.profileSection}>
+        <View style={styles.avatarContainer}>
+          <View style={[styles.avatar, { backgroundColor: currentTheme.avatarBg }]}>
+            <Text style={[styles.avatarText, { color: currentTheme.text }]}>JS</Text>
+          </View>
+          <View style={[styles.editBadge, { borderColor: currentTheme.border }]}>
+            <View style={[styles.editIcon, { backgroundColor: currentTheme.background }]}>
+              <Icon name="settings" size={12} color={currentTheme.iconColor} />
+            </View>
+          </View>
+        </View>
+        <Text style={[styles.userName, { color: currentTheme.text }]}>
           Jesse Sarfo-Boateng
         </Text>
       </View>
 
-      {/* Profile Options */}
-      <View style={styles.optionsContainer}>
-        <ProfileItem
-          icon="person-outline"
-          title="Profile"
-          onPress={() => console.log('Profile pressed')}
-        />
-        
-        <ProfileItem
-          icon="bookmark-outline"
-          title="Saved jobs"
-          onPress={() => console.log('Saved jobs pressed')}
-        />
-        
-        <ProfileItem
-          icon="briefcase-outline"
-          title="Job preferences"
-          onPress={() => console.log('Job preferences pressed')}
-        />
+      {/* Menu Items */}
+      <View style={styles.menuContainer}>
+        {menuItems.map(renderMenuItem)}
       </View>
     </SafeAreaView>
   );
@@ -100,71 +121,84 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    marginBottom: 20,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
   },
   backButton: {
-    padding: 5,
+    padding: 4,
   },
   headerTitle: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: '600',
-    flex: 1,
+    fontFamily: 'Poppins',
     textAlign: 'center',
-    marginHorizontal: 20,
   },
-  themeToggle: {
-    padding: 5,
+  headerRight: {
+    width: 32,
   },
-  userSection: {
+  profileSection: {
     alignItems: 'center',
-    paddingHorizontal: 20,
-    marginBottom: 40,
+    paddingVertical: 32,
+    paddingHorizontal: 16,
+  },
+  avatarContainer: {
+    position: 'relative',
+    marginBottom: 16,
   },
   avatar: {
     width: 80,
     height: 80,
     borderRadius: 40,
-    justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 16,
+    justifyContent: 'center',
   },
   avatarText: {
-    color: '#FFFFFF',
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: '600',
+  },
+  editBadge: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+  },
+  editIcon: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   userName: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: '600',
-    textAlign: 'center',
   },
-  optionsContainer: {
-    paddingHorizontal: 20,
-    gap: 12,
+  menuContainer: {
+    flex: 1,
+    paddingHorizontal: 16,
+     
   },
-  profileItem: {
+  menuItem: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 18,
-    paddingHorizontal: 20,
-    borderRadius: 12,
-    borderWidth: 1,
+    paddingVertical: 16,
+   
   },
-  itemLeft: {
+  menuItemLeft: {
     flexDirection: 'row',
     alignItems: 'center',
-    flex: 1,
   },
-  itemIcon: {
-    marginRight: 16,
-  },
-  itemText: {
-    fontSize: 18,
-    fontWeight: '500',
+  menuItemText: {
+    fontSize: 16,
+    fontWeight: '700',
+    marginLeft: 16,
   },
 });
 
-export default ProfilePage;
+export default ProfileScreen;
