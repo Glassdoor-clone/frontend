@@ -1,3 +1,4 @@
+import { notificationsData } from '@/data/notificationsData';
 import { useRouter } from 'expo-router';
 import { useRef, useState } from 'react';
 import {
@@ -12,6 +13,7 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 
 const NotificationsScreen = () => {
   const colorScheme = useColorScheme();
@@ -20,48 +22,7 @@ const NotificationsScreen = () => {
 
   const styles = createStyles(isDark);
 
-  const [notifications, setNotifications] = useState([
-    {
-      id: 1,
-      title: 'Job Hunting in Tech',
-      message: '"Being a contractor probably means your job search never really ends. If you\'re a contractor or consultant, how do you usually find your next gig an..."',
-      time: '5h',
-      icon: '👤',
-      hasUnread: true,
-    },
-    {
-      id: 2,
-      title: 'Tech',
-      message: '"Has anyone worked at a startup that got acquired? What was the transition like with merging? Did you stay or leave?"',
-      time: '6h',
-      icon: '💬',
-      hasUnread: true,
-    },
-    {
-      id: 3,
-      title: 'Career Advice for Students',
-      message: '"We\'re hiring a Remote Customer Success Manager – apply now and get hired on the spot. This position pays $38.99 per hour and includes paid training..."',
-      time: '9h',
-      icon: '🌍',
-      hasUnread: true,
-    },
-    {
-      id: 4,
-      title: 'Finance',
-      message: '"Are you building anything outside of work? Or working on any side hustle?\n\nI tutor outside of work. About 13-15 kids privately 1 to 1. I want to s..."',
-      time: '11h',
-      icon: '💬',
-      hasUnread: true,
-    },
-    {
-      id: 5,
-      title: 'Job Referrals!',
-      message: '"Hello! I am currently seeking job opportunities in the chemical field, particularly in roles such as Chemical Laboratory Technician, Quality Assura..."',
-      time: '20h',
-      icon: '👥',
-      hasUnread: true,
-    }
-  ]);
+  const [notifications, setNotifications] = useState(notificationsData);
 
   const deleteNotification = (id) => {
     setNotifications(prev => prev.filter(notification => notification.id !== id));
@@ -174,10 +135,10 @@ const NotificationsScreen = () => {
         backgroundColor={styles.container.backgroundColor}
       />
       
-      {/* Header - Removed trash can icon */}
+      {/* Header with ChevronLeft */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <Text style={styles.backIcon}>←</Text>
+          <Icon name="chevron-left" size={24} color={isDark ? '#ffffff' : '#000000'} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Notifications</Text>
         <View style={styles.placeholderButton} />
@@ -206,6 +167,7 @@ const createStyles = (isDark) => StyleSheet.create({
     paddingVertical: 12,
     borderBottomWidth: 1,
     borderBottomColor: isDark ? '#333333' : '#e5e5e5',
+    
   },
   backButton: {
     width: 40,
@@ -213,13 +175,10 @@ const createStyles = (isDark) => StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  backIcon: {
-    fontSize: 24,
-    color: isDark ? '#ffffff' : '#000000',
-  },
   headerTitle: {
     fontSize: 18,
     fontWeight: '600',
+    fontFamily: 'Poppins',
     color: isDark ? '#ffffff' : '#000000',
   },
   placeholderButton: {
