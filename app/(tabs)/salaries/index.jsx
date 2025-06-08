@@ -1,12 +1,14 @@
-import Headers from '@/components/Headers';
+
 import SearchBar from '@/components/SearchBar';
 import { useState } from 'react';
 import { SafeAreaView, ScrollView, Text, TouchableOpacity, useColorScheme, View } from 'react-native';
+
 
 const SalariesPage = () => {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
 
+  
   
   // Extended salary data for load more functionality
   const allSalaryData = [
@@ -496,13 +498,13 @@ const SalariesPage = () => {
       fontWeight: 'bold',
       color: isDark ? '#ffffff' : '#000000',
       marginBottom: 8,
-      fontFamily: 'System',
+     
     },
     subtitle: {
       fontSize: 16,
       color: isDark ? '#e5e5e5' : '#666666',
       marginBottom: 32,
-      fontFamily: 'System',
+      
     },
     searchPlaceholder: {
       backgroundColor: isDark ? '#2a2a2a' : '#f8f9fa',
@@ -688,7 +690,6 @@ const SalariesPage = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Headers />
       <SearchBar 
         placeholder='Search salaries' 
         onSearch={handleSearch}

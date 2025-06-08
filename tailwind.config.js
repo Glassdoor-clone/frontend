@@ -9,6 +9,10 @@ module.exports = {
   darkMode: 'media',
   theme: {
     extend: {
+      fontFamily: {
+        poppins: ['Poppins'],
+        inter: ['Inter'],
+      },
       colors: {
         primary: '#030014',
         secondary: '#151312',
