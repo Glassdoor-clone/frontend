@@ -59,5 +59,126 @@ export const jobsData = [
     applicants: 19,
     requirements: ["AWS", "Docker", "Kubernetes", "4+ years exp"],
     remote: false
-  }
+  },
+  {
+  id: 6,
+  title: "Frontend Developer",
+  company: "GreenBytes",
+  location: "Portland, OR",
+  salary: "$85K - $130K",
+  type: "Full-time",
+  posted: "2 days ago",
+  applicants: 42,
+  requirements: ["JavaScript", "Vue.js", "3+ years exp"],
+  remote: false
+},
+{
+  id: 7,
+  title: "Backend Engineer",
+  company: "HealthSync",
+  location: "Chicago, IL",
+  salary: "$110K - $150K",
+  type: "Full-time",
+  posted: "1 day ago",
+  applicants: 35,
+  requirements: ["Node.js", "MongoDB", "API Design"],
+  remote: true
+},
+{
+  id: 8,
+  title: "Blockchain Developer",
+  company: "CryptoHive",
+  location: "Miami, FL",
+  salary: "$120K - $170K",
+  type: "Contract",
+  posted: "3 days ago",
+  applicants: 51,
+  requirements: ["Solidity", "Ethereum", "Smart Contracts"],
+  remote: true
+},
+{
+  id: 9,
+  title: "ML Engineer",
+  company: "AIWorks",
+  location: "Mountain View, CA",
+  salary: "$130K - $180K",
+  type: "Full-time",
+  posted: "4 days ago",
+  applicants: 29,
+  requirements: ["TensorFlow", "Python", "Deep Learning"],
+  remote: false
+},
+{
+  id: 10,
+  title: "Systems Analyst",
+  company: "RetailTech",
+  location: "Dallas, TX",
+  salary: "$90K - $115K",
+  type: "Full-time",
+  posted: "5 days ago",
+  applicants: 18,
+  requirements: ["System Design", "SQL", "Business Analysis"],
+  remote: false
+},
+{
+  id: 11,
+  title: "Full Stack Developer",
+  company: "EduBridge",
+  location: "Philadelphia, PA",
+  salary: "$105K - $145K",
+  type: "Full-time",
+  posted: "2 days ago",
+  applicants: 40,
+  requirements: ["React", "Node.js", "MongoDB"],
+  remote: true
+},
+{
+  id: 12,
+  title: "Mobile App Developer",
+  company: "AppNinja",
+  location: "Remote",
+  salary: "$90K - $130K",
+  type: "Contract",
+  posted: "3 days ago",
+  applicants: 50,
+  requirements: ["React Native", "Flutter", "3+ apps on App Store"],
+  remote: true
+},
+{
+  id: 13,
+  title: "Network Engineer",
+  company: "NeoNetworks",
+  location: "Atlanta, GA",
+  salary: "$95K - $125K",
+  type: "Full-time",
+  posted: "4 days ago",
+  applicants: 22,
+  requirements: ["Cisco", "Networking Protocols", "4+ years exp"],
+  remote: false
+},
+{
+  id: 14,
+  title: "QA Engineer",
+  company: "Finverse",
+  location: "San Jose, CA",
+  salary: "$85K - $110K",
+  type: "Full-time",
+  posted: "1 day ago",
+  applicants: 27,
+  requirements: ["Selenium", "Cypress", "Automation"],
+  remote: true
+},
+{
+  id: 15,
+  title: "Technical Writer",
+  company: "DocCraft",
+  location: "Remote",
+  salary: "$70K - $100K",
+  type: "Part-time",
+  posted: "5 days ago",
+  applicants: 15,
+  requirements: ["Markdown", "API Docs", "Clear Writing Skills"],
+  remote: true
+}
+
 ];

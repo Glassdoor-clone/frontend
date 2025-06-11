@@ -59,5 +59,126 @@ export const salariesData = [
     submittedDate: "2024-06-04",
     bonus: 12000,
     equity: 18000
-  }
+  },
+  {
+  id: 6,
+  jobTitle: "Mechanical Engineer",
+  company: "NextGen Robotics",
+  baseSalary: 95000,
+  totalComp: 107000,
+  experience: "2-3 years",
+  location: "Boston, MA",
+  submittedDate: "2024-06-03",
+  bonus: 7000,
+  equity: 5000
+},
+{
+  id: 7,
+  jobTitle: "Backend Engineer",
+  company: "HealthSync",
+  baseSalary: 130000,
+  totalComp: 165000,
+  experience: "4-6 years",
+  location: "Chicago, IL",
+  submittedDate: "2024-06-02",
+  bonus: 15000,
+  equity: 20000
+},
+{
+  id: 8,
+  jobTitle: "Frontend Developer",
+  company: "GreenBytes",
+  baseSalary: 105000,
+  totalComp: 125000,
+  experience: "3-5 years",
+  location: "Portland, OR",
+  submittedDate: "2024-06-01",
+  bonus: 10000,
+  equity: 10000
+},
+{
+  id: 9,
+  jobTitle: "QA Engineer",
+  company: "Finverse",
+  baseSalary: 95000,
+  totalComp: 115000,
+  experience: "2-4 years",
+  location: "San Jose, CA",
+  submittedDate: "2024-05-30",
+  bonus: 12000,
+  equity: 8000
+},
+{
+  id: 10,
+  jobTitle: "Software Intern",
+  company: "CodeNest",
+  baseSalary: 30000,
+  totalComp: 30000,
+  experience: "Internship",
+  location: "Denver, CO",
+  submittedDate: "2024-05-28",
+  bonus: 0,
+  equity: 0
+},
+{
+  id: 11,
+  jobTitle: "Network Engineer",
+  company: "NeoNetworks",
+  baseSalary: 100000,
+  totalComp: 117000,
+  experience: "3-5 years",
+  location: "Atlanta, GA",
+  submittedDate: "2024-05-25",
+  bonus: 10000,
+  equity: 7000
+},
+{
+  id: 12,
+  jobTitle: "ML Engineer",
+  company: "AIWorks",
+  baseSalary: 145000,
+  totalComp: 190000,
+  experience: "4-6 years",
+  location: "Mountain View, CA",
+  submittedDate: "2024-05-22",
+  bonus: 20000,
+  equity: 25000
+},
+{
+  id: 13,
+  jobTitle: "Full Stack Developer",
+  company: "EduBridge",
+  baseSalary: 110000,
+  totalComp: 125000,
+  experience: "3-5 years",
+  location: "Philadelphia, PA",
+  submittedDate: "2024-05-20",
+  bonus: 8000,
+  equity: 7000
+},
+{
+  id: 14,
+  jobTitle: "Blockchain Developer",
+  company: "CryptoHive",
+  baseSalary: 135000,
+  totalComp: 170000,
+  experience: "3-5 years",
+  location: "Miami, FL",
+  submittedDate: "2024-05-18",
+  bonus: 15000,
+  equity: 20000
+},
+{
+  id: 15,
+  jobTitle: "Systems Analyst",
+  company: "RetailTech",
+  baseSalary: 95000,
+  totalComp: 110000,
+  experience: "2-4 years",
+  location: "Dallas, TX",
+  submittedDate: "2024-05-15",
+  bonus: 10000,
+  equity: 5000
+}
+
 ];
