@@ -1,6 +1,8 @@
 import SearchBar from '@/components/SearchBar';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, TouchableOpacity, View, useColorScheme } from 'react-native';
+
 
 // Theme configuration
 const themes = {
@@ -27,6 +29,7 @@ const JobsPage = () => {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
   const theme = themes[isDark ? 'dark' : 'light'];
+  const router = useRouter();
 
   const styles = StyleSheet.create({
     safeArea: {
@@ -89,10 +92,12 @@ const JobsPage = () => {
     // Handle search functionality
     // You might want to navigate to a search screen or open a modal
   };
+  
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <SearchBar 
+        onPress={() => router.push("/search")}
         placeholder="Search jobs" 
         // Pass theme props to SearchBar if it supports theming
         theme={theme}

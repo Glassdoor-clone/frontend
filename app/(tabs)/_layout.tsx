@@ -23,8 +23,9 @@ export default function TabLayout() {
             },
             tabBarLabelStyle: {
               fontSize: 12,
-              fontFamily: 'Inter',
+              fontFamily: 'Inter'
             },
+
           }}
         >
           <Tabs.Screen
