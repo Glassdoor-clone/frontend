@@ -1,5 +1,6 @@
 import SearchBar from '@/components/SearchBar';
 
+import { useRouter } from 'expo-router';
 import {
   Image,
   SafeAreaView,
@@ -12,6 +13,7 @@ import {
 const CompaniesPage = () => {
   const colorScheme = useColorScheme();
   const isDarkMode = colorScheme === 'dark';
+  const router = useRouter();
 
   const theme = {
     background: isDarkMode ? '#171717' : '#FFFFFF',
@@ -22,7 +24,7 @@ const CompaniesPage = () => {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
-      <SearchBar placeholder='Search companies' />
+      <SearchBar onPress={() => router.push("/search")} placeholder='Search companies' />
       <View style={styles.content}>
         <Text style={[styles.title, { color: theme.text }]}>Companies</Text>
         <Text style={[styles.subtitle, { color: theme.secondaryText }]}>
