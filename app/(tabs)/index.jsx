@@ -1,9 +1,11 @@
 import SearchBar from '@/components/SearchBar';
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, Text, View, useColorScheme } from 'react-native';
 
 export default function CommunityScreen() {
   const [activeTab, setActiveTab] = useState('feed');
+  const router = useRouter();
   
   // Get current color scheme
   const colorScheme = useColorScheme();
@@ -12,7 +14,7 @@ export default function CommunityScreen() {
   return (
     <View className={`flex-1 ${isDark ? 'bg-neutral-900' : 'bg-white'}`}>
       
-      <SearchBar placeholder="Search conversations" />
+      <SearchBar onPress={() => router.push("/search")} placeholder="Search conversations" />
       
       {/* Tab buttons */}
       <View className="flex-row justify-center mb-4 mt-5">
@@ -20,7 +22,7 @@ export default function CommunityScreen() {
           onPress={() => setActiveTab('feed')}
           className="mx-8"
         >
-          <Text className={`text-lg text-center ${activeTab === 'feed' ? `font-bold ${isDark ? 'text-white' : 'text-black'}` : `${isDark ? 'text-gray-400' : 'text-gray-500'}`}`}>
+          <Text className={`text-lg text-center font-poppins ${activeTab === 'feed' ? `font-bold ${isDark ? 'text-white' : 'text-black'}` : `${isDark ? 'text-gray-400' : 'text-gray-500'}`}`}>
             Feed
           </Text>
           {/* Border under Feed */}
@@ -31,7 +33,7 @@ export default function CommunityScreen() {
           onPress={() => setActiveTab('bowls')}
           className="mx-8"
         >
-          <Text className={`text-lg text-center ${activeTab === 'bowls' ? `font-bold ${isDark ? 'text-white' : 'text-black'}` : `${isDark ? 'text-gray-400' : 'text-gray-500'}`}`}>
+          <Text className={`text-lg text-center font-poppins ${activeTab === 'bowls' ? `font-bold ${isDark ? 'text-white' : 'text-black'}` : `${isDark ? 'text-gray-400' : 'text-gray-500'}`}`}>
             Bowls
           </Text>
           {/* Border under Bowls */}

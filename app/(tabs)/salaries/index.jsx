@@ -1,5 +1,6 @@
 
 import SearchBar from '@/components/SearchBar';
+import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { SafeAreaView, ScrollView, Text, TouchableOpacity, useColorScheme, View } from 'react-native';
 
@@ -7,6 +8,7 @@ import { SafeAreaView, ScrollView, Text, TouchableOpacity, useColorScheme, View 
 const SalariesPage = () => {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
+  const router = useRouter();
 
   
   
@@ -691,6 +693,7 @@ const SalariesPage = () => {
   return (
     <SafeAreaView style={styles.container}>
       <SearchBar 
+        onPress={() => router.push("/search")}
         placeholder='Search salaries' 
         onSearch={handleSearch}
         value={searchQuery}

@@ -1,17 +1,16 @@
 import { Ionicons } from '@expo/vector-icons';
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  Keyboard,
+  Pressable,
   StyleSheet,
   TextInput,
   View,
-  useColorScheme,
+  useColorScheme
 } from 'react-native';
 
-const SearchBar = ({ placeholder = "Search jobs, companies...", onSearch }) => {
+const SearchBar = ({ placeholder = "Search jobs, companies...", onPress }) => {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
-  const [query, setQuery] = useState('');
 
   const styles = StyleSheet.create({
     container: {
@@ -22,10 +21,6 @@ const SearchBar = ({ placeholder = "Search jobs, companies...", onSearch }) => {
       paddingHorizontal: 15,
       paddingVertical: 11,
       marginHorizontal: 20,
-     
-       // shadowColor: '#000',
-      // shadowOpacity: 0.05,
-      // shadowRadius: 2,
       elevation: 2,
     },
     input: {
@@ -36,28 +31,21 @@ const SearchBar = ({ placeholder = "Search jobs, companies...", onSearch }) => {
     },
   });
 
-  const handleSubmit = () => {
-    if (onSearch) {
-      onSearch(query);
-    }
-    Keyboard.dismiss(); // hide keyboard after submit
-  };
-
   return (
-    <View style={styles.container}>
-      <Ionicons name="search-outline" size={20} color={isDark ? '#aaa' : '#555'} />
-      <TextInput
-        className='font-inter'
-        style={styles.input}
-        placeholder={placeholder}
-        placeholderTextColor={isDark ? '#888' : '#999'}
-        underlineColorAndroid="transparent"
-        value={query}
-        onChangeText={setQuery}
-        returnKeyType="search"
-        onSubmitEditing={handleSubmit}
-      />
-    </View>
+    <Pressable onPress={onPress}>
+      <View style={styles.container}>
+        <Ionicons name="search-outline" size={20} color={isDark ? '#aaa' : '#555'} />
+        <TextInput
+          pointerEvents="none" // disables input focus
+          editable={false}     // disables keyboard
+          className="font-inter"
+          style={styles.input}
+          placeholder={placeholder}
+          placeholderTextColor={isDark ? '#888' : '#999'}
+          underlineColorAndroid="transparent"
+        />
+      </View>
+    </Pressable>
   );
 };
 

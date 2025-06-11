@@ -53,7 +53,7 @@ const JobseekLogin = () => {
               textShadowColor: isDarkMode ? 'rgba(255, 255, 255, 0.3)' : 'rgba(0, 0, 0, 0.1)'
             }
           ]}>
-            JOBSEEK
+            'JOBSEEK'
           </Text>
           <Text style={[
             styles.subtitle,
@@ -61,7 +61,7 @@ const JobseekLogin = () => {
           ]}>
             Find jobs and talk careers
           </Text>
-          <View style={styles.accentLine} />
+          
         </View>
 
         {/* Terms */}
