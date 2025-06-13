@@ -1,204 +1,268 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  Appearance,
+  Alert,
   SafeAreaView,
-  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
+  useColorScheme,
   View
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
-
-const ProfileScreen = () => {
-  const [isDarkMode, setIsDarkMode] = useState(Appearance.getColorScheme() === 'dark');
+export default function UserProfileScreen() {
   const router = useRouter();
-  useEffect(() => {
-    const subscription = Appearance.addChangeListener(({ colorScheme }) => {
-      setIsDarkMode(colorScheme === 'dark');
-    });
+  const colorScheme = useColorScheme();
+  const isDark = colorScheme === 'dark';
+  const [userData, setUserData] = useState(null);
 
-    return () => subscription?.remove();
+  useEffect(() => {
+    loadUserData();
   }, []);
 
-  const themes = {
-    dark: {
-      background: '#171717',
-      text: '#ffffff',
-      subtext: '#a1a1aa',
-      iconColor: '#a1a1aa',
-      border: '#2a2a2a',
-      avatarBg: '#374151'
-    },
-    light: {
-      background: '#ffffff',
-      text: '#000000',
-      subtext: '#6b7280',
-      iconColor: '#6b7280',
-      border: '#f3f4f6',
-      avatarBg: '#e5e7eb'
+  const loadUserData = async () => {
+    try {
+      const data = await AsyncStorage.getItem('userData');
+      if (data) {
+        setUserData(JSON.parse(data));
+      }
+    } catch (error) {
+      console.error('Failed to load user data:', error);
     }
   };
 
-  const currentTheme = isDarkMode ? themes.dark : themes.light;
+  const handleLogout = async () => {
+    Alert.alert(
+      'Logout',
+      'Are you sure you want to logout?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Logout',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              await AsyncStorage.removeItem('userToken');
+              router.replace('/(auth)/login');
+            } catch (error) {
+              console.error('Logout failed:', error);
+            }
+          },
+        },
+      ]
+    );
+  };
 
   const menuItems = [
-    { icon: 'user', label: 'Profile' },
-    { icon: 'bookmark', label: 'Saved jobs' },
-    { icon: 'sliders', label: 'Job preferences' },
-    { icon: 'user-check', label: 'Following' },
-    { icon: 'message-square', label: 'Posting activity' },
-    { icon: 'settings', label: 'Account settings' },
-    { icon: 'users', label: 'Demographics' }
+    { id: 'profile', title: 'Profile', icon: 'user' },
+    { id: 'saved', title: 'Saved jobs', icon: 'bookmark' },
+    { id: 'preferences', title: 'Job preferences', icon: 'settings' },
+    { id: 'following', title: 'Following', icon: 'users' },
+    { id: 'activity', title: 'Posting activity', icon: 'message-circle' },
+    { id: 'settings', title: 'Account settings', icon: 'settings' },
+    { id: 'demographics', title: 'Demographics', icon: 'bar-chart-2' },
   ];
 
-  const renderMenuItem = ({ icon, label }) => (
-    <TouchableOpacity 
-      key={label}
-      style={[styles.menuItem, { borderBottomColor: currentTheme.border }]}
-      activeOpacity={0.7}
-    >
-      <View style={styles.menuItemLeft}>
-        <Icon name={icon} size={20} color={currentTheme.iconColor} />
-        <Text style={[styles.menuItemText, { color: currentTheme.text }]}>
-          {label}
-        </Text>
-      </View>
-      <Icon name="chevron-right" size={16} color={currentTheme.iconColor} />
-    </TouchableOpacity>
-  );
+  const handleMenuPress = (itemId) => {
+    // Handle navigation based on menu item
+    console.log('Menu item pressed:', itemId);
+    // You can add navigation logic here
+  };
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: isDark ? '#1a1a1a' : '#ffffff',
+    },
+    safeArea: {
+      flex: 1,
+      backgroundColor: isDark ? '#1a1a1a' : '#ffffff',
+    },
+    header: {
+      alignItems: 'center',
+      paddingVertical: 40,
+      paddingHorizontal: 24,
+      paddingTop: 20,
+    },
+     headerText: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingHorizontal: 16,
+      paddingVertical: 16,
+    },
+    backButton: {
+      padding: 4,
+    },
+    headerTitle: {
+      fontSize: 18,
+      fontWeight: '600',
+      fontFamily: 'Poppins',
+      textAlign: 'center',
+    },
+    headerRight: {
+      width: 32,
+    },
+    avatar: {
+      width: 80,
+      height: 80,
+      borderRadius: 40,
+      backgroundColor: '#5A67D8',
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: 10,
+      position: 'relative',
+    },
+    avatarText: {
+      color: '#ffffff',
+      fontSize: 36,
+      fontFamily: 'Poppins'
+    },
+    editIcon: {
+      position: 'absolute',
+      bottom: 4,
+      right: 4,
+      width: 32,
+      height: 32,
+      borderRadius: 16,
+      backgroundColor: isDark ? '#374151' : '#f3f4f6',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderWidth: 3,
+      borderColor: isDark ? '#1a1a1a' : '#ffffff',
+    },
+    name: {
+      fontSize: 24,
+      fontFamily: 'Poppins',
+      color: isDark ? '#ffffff' : '#1a1a1a',
+      textAlign: 'center',
+      marginBottom: 8,
+    },
+    email: {
+      fontSize: 16,
+      fontFamily: 'Poppins',
+      color: isDark ? '#a3a3a3' : '#666666',
+      textAlign: 'center',
+      marginBottom: 10,
+    },
+    menuContainer: {
+      flex: 1,
+      paddingHorizontal: 24,
+    },
+    menuItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      paddingVertical: 15,
+      paddingHorizontal: 0,
+    },
+    menuIcon: {
+      width: 24,
+      height: 24,
+      marginRight: 20,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    menuTitle: {
+      fontSize: 16,
+      fontFamily: 'Poppins',
+      color: isDark ? '#ffffff' : '#1a1a1a',
+      flex: 1,
+    },
+    logoutButton: {
+      backgroundColor: '#dc2626',
+      borderRadius: 12,
+      padding: 16,
+      alignItems: 'center',
+      marginTop: 20,
+      marginHorizontal: 24,
+      marginBottom: 30,
+    },
+    logoutText: {
+      color: '#ffffff',
+      fontSize: 16,
+      fontFamily: 'Poppins',
+    },
+    loadingContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    loadingText: {
+      fontSize: 18,
+      fontFamily: 'Poppins',
+      color: isDark ? '#ffffff' : '#1a1a1a',
+    },
+  });
+
+  if (!userData) {
+    return (
+      <SafeAreaView style={[styles.safeArea, styles.loadingContainer]}>
+        <Text style={styles.loadingText}>Loading...</Text>
+      </SafeAreaView>
+    );
+  }
+
+  const getInitials = (name) => {
+    if (!name) return 'U';
+    return name
+      .split(' ')
+      .map(word => word.charAt(0))
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
+  };
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: currentTheme.background }]}>
-      <StatusBar 
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'} 
-        backgroundColor={currentTheme.background}
-      />
-      
-      {/* Header */}
-      <View style={styles.header}>
+    <SafeAreaView style={styles.safeArea}>
+       {/* Header */}
+      <View style={styles.headerText}>
         <TouchableOpacity style={styles.backButton} onPress={() => router.back()} activeOpacity={0.7}>
-          <Icon name="chevron-left" size={24} color={currentTheme.text} />
+          <Icon name="chevron-left" size={24} color={isDark ? '#ffffff' : '#000000'} />
         </TouchableOpacity>
-        <Text style={[styles.headerTitle, { color: currentTheme.text }]}>
+        <Text style={[styles.headerTitle, { color: isDark ? '#ffffff' : '#000000' }]}>
           Profile
         </Text>
         <View style={styles.headerRight} />
       </View>
 
-      {/* Profile Info */}
-      <View style={styles.profileSection}>
-        <View style={styles.avatarContainer}>
-          <View style={[styles.avatar, { backgroundColor: currentTheme.avatarBg }]}>
-            <Text style={[styles.avatarText, { color: currentTheme.text }]}>JS</Text>
-          </View>
-          <View style={[styles.editBadge, { borderColor: currentTheme.border }]}>
-            <View style={[styles.editIcon, { backgroundColor: currentTheme.background }]}>
-              <Icon name="settings" size={12} color={currentTheme.iconColor} />
-            </View>
+      <View style={styles.header}>
+        <View style={styles.avatar}>
+          <Text style={styles.avatarText} className='font-poppins'>
+            {getInitials(userData.fullName || userData.name)}
+          </Text>
+          <View style={styles.editIcon}>
+            <Icon name="settings" size={16} color={isDark ? '#ffffff' : '#374151'} />
           </View>
         </View>
-        <Text style={[styles.userName, { color: currentTheme.text }]}>
-          Jesse Sarfo-Boateng
+        <Text style={styles.name}>
+          {userData.fullName || userData.name || 'User'}
+        </Text>
+        <Text style={styles.email}>
+          {userData.email || 'No email provided'}
         </Text>
       </View>
 
-      {/* Menu Items */}
-      <View style={styles.menuContainer}>
-        {menuItems.map(renderMenuItem)}
+      <View style={styles.menuContainer} showsVerticalScrollIndicator={false}>
+        {menuItems.map((item) => (
+          <TouchableOpacity
+            key={item.id}
+            style={styles.menuItem}
+            onPress={() => handleMenuPress(item.id)}
+          >
+            <View style={styles.menuIcon}>
+              <Icon name={item.icon} size={20} color={isDark ? '#ffffff' : '#374151'} />
+            </View>
+            <Text style={styles.menuTitle}>{item.title}</Text>
+            <Icon name="chevron-right" size={16} color={isDark ? '#9ca3af' : '#6b7280'} />
+          </TouchableOpacity>
+        ))}
+        
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+          <Text style={styles.logoutText}>Logout</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 16,
-  },
-  backButton: {
-    padding: 4,
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    fontFamily: 'Poppins',
-    textAlign: 'center',
-  },
-  headerRight: {
-    width: 32,
-  },
-  profileSection: {
-    alignItems: 'center',
-    paddingVertical: 32,
-    paddingHorizontal: 16,
-  },
-  avatarContainer: {
-    position: 'relative',
-    marginBottom: 16,
-  },
-  avatar: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  avatarText: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  editBadge: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 2,
-  },
-  editIcon: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  userName: {
-    fontSize: 20,
-    fontWeight: '600',
-  },
-  menuContainer: {
-    flex: 1,
-    paddingHorizontal: 16,
-     
-  },
-  menuItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: 16,
-   
-  },
-  menuItemLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  menuItemText: {
-    fontSize: 16,
-    fontWeight: '700',
-    marginLeft: 16,
-  },
-});
-
-export default ProfileScreen;
+}
