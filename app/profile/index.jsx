@@ -66,9 +66,31 @@ export default function UserProfileScreen() {
   ];
 
   const handleMenuPress = (itemId) => {
-    // Handle navigation based on menu item
-    console.log('Menu item pressed:', itemId);
-    // You can add navigation logic here
+    switch (itemId) {
+      case 'profile':
+        router.push('./profile/userprofile');
+        break;
+      case 'saved':
+        router.push('/saved-jobs');
+        break;
+      case 'preferences':
+        router.push('/job-preferences');
+        break;
+      case 'following':
+        router.push('/following');
+        break;
+      case 'activity':
+        router.push('/posting-activity');
+        break;
+      case 'settings':
+        router.push('/account-settings');
+        break;
+      case 'demographics':
+        router.push('/demographics');
+        break;
+      default:
+        console.log('Unknown menu item:', itemId);
+    }
   };
 
   const styles = StyleSheet.create({
