@@ -37,7 +37,7 @@ const Header = () => {
     logo: {
       fontSize: 22,
       fontWeight: '900',
-      color: '#22c55e',
+      color: '#0CAA41',
       fontFamily: 'Poppins',
       letterSpacing: 1,
     },
