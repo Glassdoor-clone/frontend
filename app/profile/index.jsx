@@ -71,22 +71,22 @@ export default function UserProfileScreen() {
         router.push('./profile/userprofile');
         break;
       case 'saved':
-        router.push('/saved-jobs');
+        router.push('./profile/savedjobs');
         break;
       case 'preferences':
         router.push('/job-preferences');
         break;
       case 'following':
-        router.push('/following');
+        router.push('./profile/following');
         break;
       case 'activity':
-        router.push('/posting-activity');
+        router.push('./profile/postingactivity');
         break;
       case 'settings':
         router.push('/account-settings');
         break;
       case 'demographics':
-        router.push('/demographics');
+        router.push('./profile/demographics');
         break;
       default:
         console.log('Unknown menu item:', itemId);
@@ -96,11 +96,11 @@ export default function UserProfileScreen() {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: isDark ? '#1a1a1a' : '#ffffff',
+      backgroundColor: isDark ? '#171717' : '#ffffff',
     },
     safeArea: {
       flex: 1,
-      backgroundColor: isDark ? '#1a1a1a' : '#ffffff',
+      backgroundColor: isDark ? '#171717' : '#ffffff',
     },
     header: {
       alignItems: 'center',
