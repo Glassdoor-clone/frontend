@@ -3,6 +3,7 @@ import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
   Alert,
+  Image,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -20,6 +21,13 @@ export default function UserProfileScreen() {
 
   useEffect(() => {
     loadUserData();
+    
+    // Listen for focus to reload user data when returning from profile picture screen
+    const unsubscribe = router.addListener?.('focus', () => {
+      loadUserData();
+    });
+
+    return unsubscribe;
   }, []);
 
   const loadUserData = async () => {
@@ -74,7 +82,7 @@ export default function UserProfileScreen() {
         router.push('./profile/savedjobs');
         break;
       case 'preferences':
-        router.push('/job-preferences');
+        router.push('./profile/jobpreferences');
         break;
       case 'following':
         router.push('./profile/following');
@@ -83,7 +91,7 @@ export default function UserProfileScreen() {
         router.push('./profile/postingactivity');
         break;
       case 'settings':
-        router.push('/account-settings');
+        router.push('./profile/accountsettings');
         break;
       case 'demographics':
         router.push('./profile/demographics');
@@ -91,6 +99,11 @@ export default function UserProfileScreen() {
       default:
         console.log('Unknown menu item:', itemId);
     }
+  };
+
+  const handleAvatarPress = () => {
+    // Navigate to profile picture screen
+    router.push('./profile/editUser/editProfilePicture');
   };
 
   const styles = StyleSheet.create({
@@ -136,6 +149,11 @@ export default function UserProfileScreen() {
       alignItems: 'center',
       marginBottom: 10,
       position: 'relative',
+    },
+    avatarImage: {
+      width: 80,
+      height: 80,
+      borderRadius: 40,
     },
     avatarText: {
       color: '#ffffff',
@@ -250,14 +268,18 @@ export default function UserProfileScreen() {
       </View>
 
       <View style={styles.header}>
-        <View style={styles.avatar}>
-          <Text style={styles.avatarText} className='font-poppins'>
-            {getInitials(userData.fullName || userData.name)}
-          </Text>
+        <TouchableOpacity style={styles.avatar} onPress={handleAvatarPress} activeOpacity={0.7}>
+          {userData.profileImage ? (
+            <Image source={{ uri: userData.profileImage }} style={styles.avatarImage} />
+          ) : (
+            <Text style={styles.avatarText} className='font-poppins'>
+              {getInitials(userData.fullName || userData.name)}
+            </Text>
+          )}
           <View style={styles.editIcon}>
-            <Icon name="settings" size={16} color={isDark ? '#ffffff' : '#374151'} />
+            <Icon name="camera" size={16} color={isDark ? '#ffffff' : '#374151'} />
           </View>
-        </View>
+        </TouchableOpacity>
         <Text style={styles.name}>
           {userData.fullName || userData.name || 'User'}
         </Text>
