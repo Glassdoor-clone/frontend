@@ -4,10 +4,10 @@ import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
   Alert,
+  Image,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  Switch,
   Text,
   TextInput,
   TouchableOpacity,
@@ -23,21 +23,23 @@ export default function RegisterScreen() {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     fullName: '',
-    gender: '',
-    employmentStatus: '',
-    jobTitle: '',
-    location: '',
-    currentEmployer: '',
-    university: '',
     email: '',
     password: '',
-    newsletter: false,
+    gender: '',
+    jobTitle: '',
+    employerName: '',
+    location: '',
+    industry: '',
+    yearsOfExperience: '',
+    salaryRange: '',
+    employerReview: '',
+    linkedinProfile: '',
   });
 
   const [loading, setLoading] = useState(false);
 
   const handleRegister = async () => {
-    if (!formData.fullName || !formData.email || !formData.password) {
+    if (!formData.fullName || !formData.email || !formData.password || !formData.jobTitle || !formData.employerName) {
       Alert.alert('Error', 'Please fill in all required fields');
       return;
     }
@@ -70,7 +72,7 @@ export default function RegisterScreen() {
   };
 
   const nextStep = () => {
-    if (currentStep < 3) {
+    if (currentStep < 4) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -82,11 +84,19 @@ export default function RegisterScreen() {
   };
 
   const canProceedFromStep1 = () => {
-    return formData.fullName.trim() !== '';
+    return formData.fullName.trim() !== '' && formData.email.trim() !== '' && formData.password.length >= 6;
   };
 
   const canProceedFromStep2 = () => {
-    return formData.email.trim() !== '' && formData.password.length >= 6;
+    return formData.jobTitle.trim() !== '' && formData.employerName.trim() !== '';
+  };
+
+  const canProceedFromStep3 = () => {
+    return formData.location.trim() !== '' && formData.industry.trim() !== '';
+  };
+
+  const canProceedFromStep4 = () => {
+    return formData.yearsOfExperience.trim() !== '';
   };
 
   const styles = {
@@ -104,35 +114,24 @@ export default function RegisterScreen() {
       alignItems: 'center',
     },
     imagePlaceholder: {
-      width: 120,
-      height: 120,
-      borderRadius: 60,
-      backgroundColor: isDark ? '#374151' : '#e5e7eb',
       marginBottom: 24,
       alignItems: 'center',
       justifyContent: 'center',
-      borderWidth: 2,
-      borderColor: isDark ? '#4b5563' : '#d1d5db',
-      borderStyle: 'dashed',
-    },
-    imagePlaceholderText: {
-      fontSize: 12,
-      color: isDark ? '#9ca3af' : '#6b7280',
-      textAlign: 'center',
-      marginTop: 8,
     },
     title: {
       fontSize: 32,
       fontWeight: 'bold',
+      fontFamily: 'Poppins',
       color: isDark ? '#ffffff' : '#171717',
       marginBottom: 12,
       textAlign: 'center',
     },
     subtitle: {
-      fontSize: 18,
+      fontSize: 16,
       color: isDark ? '#a3a3a3' : '#666666',
       textAlign: 'center',
       lineHeight: 24,
+      fontFamily: 'Inter',
     },
     stepIndicator: {
       flexDirection: 'row',
@@ -144,7 +143,7 @@ export default function RegisterScreen() {
       width: 12,
       height: 12,
       borderRadius: 6,
-      marginHorizontal: 8,
+      marginHorizontal: 4,
     },
     stepDotActive: {
       backgroundColor: '#0CAA41',
@@ -153,7 +152,7 @@ export default function RegisterScreen() {
       backgroundColor: isDark ? '#374151' : '#d1d5db',
     },
     stepLine: {
-      width: 40,
+      width: 30,
       height: 2,
       backgroundColor: isDark ? '#374151' : '#d1d5db',
     },
@@ -167,12 +166,24 @@ export default function RegisterScreen() {
       marginBottom: 28,
     },
     label: {
-      fontSize: 16,
+      fontSize: 14,
       fontWeight: '600',
+      fontFamily: 'Poppins',
       color: isDark ? '#ffffff' : '#171717',
       marginBottom: 12,
     },
     input: {
+      borderWidth: 2,
+      borderColor: isDark ? '#374151' : '#e5e7eb',
+      borderRadius: 12,
+      padding: 16,
+      fontSize: 16,
+      backgroundColor: isDark ? '#1f2937' : '#f9fafb',
+      color: isDark ? '#ffffff' : '#171717',
+      minHeight: 56,
+      fontFamily: 'Inter'
+    },
+    textArea: {
       borderWidth: 2,
       borderColor: isDark ? '#374151' : '#e5e7eb',
       borderRadius: 16,
@@ -180,7 +191,8 @@ export default function RegisterScreen() {
       fontSize: 16,
       backgroundColor: isDark ? '#1f2937' : '#f9fafb',
       color: isDark ? '#ffffff' : '#171717',
-      minHeight: 56,
+      minHeight: 120,
+      textAlignVertical: 'top',
     },
     inputFocused: {
       borderColor: '#0CAA41',
@@ -190,27 +202,11 @@ export default function RegisterScreen() {
       borderColor: isDark ? '#374151' : '#e5e7eb',
       borderRadius: 16,
       backgroundColor: isDark ? '#1f2937' : '#f9fafb',
-      minHeight: 56,
+      mainHeight: 50,
       justifyContent: 'center',
     },
     picker: {
       color: isDark ? '#ffffff' : '#171717',
-    },
-    switchContainer: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      marginBottom: 32,
-      padding: 20,
-      borderRadius: 16,
-      backgroundColor: isDark ? '#1f2937' : '#f9fafb',
-    },
-    switchLabel: {
-      flex: 1,
-      fontSize: 16,
-      color: isDark ? '#ffffff' : '#171717',
-      marginRight: 16,
-      lineHeight: 22,
     },
     buttonContainer: {
       marginTop: 20,
@@ -222,8 +218,8 @@ export default function RegisterScreen() {
     },
     button: {
       backgroundColor: '#0CAA41',
-      borderRadius: 16,
-      padding: 20,
+      borderRadius: 12,
+      padding: 16,
       alignItems: 'center',
       flex: 1,
       minHeight: 56,
@@ -239,6 +235,7 @@ export default function RegisterScreen() {
     },
     buttonText: {
       color: '#ffffff',
+      fontFamily: 'Poppins',
       fontSize: 16,
       fontWeight: '600',
     },
@@ -247,6 +244,7 @@ export default function RegisterScreen() {
     },
     loginLink: {
       marginTop: 32,
+      marginBottom: 50,
       alignItems: 'center',
     },
     loginText: {
@@ -267,6 +265,8 @@ export default function RegisterScreen() {
       <View style={[styles.stepDot, currentStep >= 2 ? styles.stepDotActive : styles.stepDotInactive]} />
       <View style={[styles.stepLine, currentStep >= 3 ? styles.stepLineActive : styles.stepLine]} />
       <View style={[styles.stepDot, currentStep >= 3 ? styles.stepDotActive : styles.stepDotInactive]} />
+      <View style={[styles.stepLine, currentStep >= 4 ? styles.stepLineActive : styles.stepLine]} />
+      <View style={[styles.stepDot, currentStep >= 4 ? styles.stepDotActive : styles.stepDotInactive]} />
     </View>
   );
 
@@ -283,93 +283,6 @@ export default function RegisterScreen() {
         />
       </View>
 
-      <View style={styles.inputGroup}>
-        <Text style={styles.label}>Gender</Text>
-        <View style={styles.pickerContainer}>
-          <Picker
-            selectedValue={formData.gender}
-            onValueChange={(value) => setFormData({...formData, gender: value})}
-            style={styles.picker}
-          >
-            <Picker.Item label="Select gender" value="" />
-            <Picker.Item label="Male" value="male" />
-            <Picker.Item label="Female" value="female" />
-            <Picker.Item label="Other" value="other" />
-            <Picker.Item label="Prefer not to say" value="prefer_not_to_say" />
-          </Picker>
-        </View>
-      </View>
-
-      <View style={styles.inputGroup}>
-        <Text style={styles.label}>Location</Text>
-        <TextInput
-          style={styles.input}
-          value={formData.location}
-          onChangeText={(text) => setFormData({...formData, location: text})}
-          placeholder="Enter your location"
-          placeholderTextColor={isDark ? '#6b7280' : '#9ca3af'}
-        />
-      </View>
-    </View>
-  );
-
-  const renderStep2 = () => (
-    <View style={styles.form}>
-      <View style={styles.inputGroup}>
-        <Text style={styles.label}>Employment Status</Text>
-        <View style={styles.pickerContainer}>
-          <Picker
-            selectedValue={formData.employmentStatus}
-            onValueChange={(value) => setFormData({...formData, employmentStatus: value})}
-            style={styles.picker}
-          >
-            <Picker.Item label="Select employment status" value="" />
-            <Picker.Item label="Employed" value="employed" />
-            <Picker.Item label="Unemployed" value="unemployed" />
-            <Picker.Item label="Student" value="student" />
-            <Picker.Item label="Self-employed" value="self_employed" />
-            <Picker.Item label="Retired" value="retired" />
-          </Picker>
-        </View>
-      </View>
-
-      <View style={styles.inputGroup}>
-        <Text style={styles.label}>Job Title</Text>
-        <TextInput
-          style={styles.input}
-          value={formData.jobTitle}
-          onChangeText={(text) => setFormData({...formData, jobTitle: text})}
-          placeholder="Enter your job title"
-          placeholderTextColor={isDark ? '#6b7280' : '#9ca3af'}
-        />
-      </View>
-
-      <View style={styles.inputGroup}>
-        <Text style={styles.label}>Current Employer</Text>
-        <TextInput
-          style={styles.input}
-          value={formData.currentEmployer}
-          onChangeText={(text) => setFormData({...formData, currentEmployer: text})}
-          placeholder="Enter your current employer"
-          placeholderTextColor={isDark ? '#6b7280' : '#9ca3af'}
-        />
-      </View>
-
-      <View style={styles.inputGroup}>
-        <Text style={styles.label}>University/College</Text>
-        <TextInput
-          style={styles.input}
-          value={formData.university}
-          onChangeText={(text) => setFormData({...formData, university: text})}
-          placeholder="Enter your university or college"
-          placeholderTextColor={isDark ? '#6b7280' : '#9ca3af'}
-        />
-      </View>
-    </View>
-  );
-
-  const renderStep3 = () => (
-    <View style={styles.form}>
       <View style={styles.inputGroup}>
         <Text style={styles.label}>Email Address *</Text>
         <TextInput
@@ -395,15 +308,155 @@ export default function RegisterScreen() {
         />
       </View>
 
-      <View style={styles.switchContainer}>
-        <Text style={styles.switchLabel}>
-          Subscribe to our newsletter for updates and opportunities
-        </Text>
-        <Switch
-          value={formData.newsletter}
-          onValueChange={(value) => setFormData({...formData, newsletter: value})}
-          trackColor={{ false: '#767577', true: '#0CAA41' }}
-          thumbColor={formData.newsletter ? '#ffffff' : '#f4f3f4'}
+      <View style={styles.inputGroup}>
+        <Text style={styles.label}>Select Gender</Text>
+        <View style={styles.pickerContainer}>
+          <Picker
+            selectedValue={formData.gender}
+            onValueChange={(value) => setFormData({...formData, gender: value})}
+            style={styles.picker}
+          >
+            {/* <Picker.Item label="Select gender (optional)" value="" /> */}
+            <Picker.Item label="Male" value="male" />
+            <Picker.Item label="Female" value="female" />
+          </Picker>
+        </View>
+      </View>
+    </View>
+  );
+
+  const renderStep2 = () => (
+    <View style={styles.form}>
+      <View style={styles.inputGroup}>
+        <Text style={styles.label}>Job Title *</Text>
+        <TextInput
+          style={styles.input}
+          value={formData.jobTitle}
+          onChangeText={(text) => setFormData({...formData, jobTitle: text})}
+          placeholder="e.g. Software Engineer, Marketing Manager"
+          placeholderTextColor={isDark ? '#6b7280' : '#9ca3af'}
+        />
+      </View>
+
+      <View style={styles.inputGroup}>
+        <Text style={styles.label}>Employer Name *</Text>
+        <TextInput
+          style={styles.input}
+          value={formData.employerName}
+          onChangeText={(text) => setFormData({...formData, employerName: text})}
+          placeholder="Enter your employer's name"
+          placeholderTextColor={isDark ? '#6b7280' : '#9ca3af'}
+        />
+      </View>
+    </View>
+  );
+
+  const renderStep3 = () => (
+    <View style={styles.form}>
+      <View style={styles.inputGroup}>
+        <Text style={styles.label}>Location *</Text>
+        <TextInput
+          style={styles.input}
+          value={formData.location}
+          onChangeText={(text) => setFormData({...formData, location: text})}
+          placeholder="e.g. New York, NY or Remote"
+          placeholderTextColor={isDark ? '#6b7280' : '#9ca3af'}
+        />
+      </View>
+
+      <View style={styles.inputGroup}>
+        <Text style={styles.label}>Industry *</Text>
+        <View style={styles.pickerContainer}>
+          <Picker
+            selectedValue={formData.industry}
+            onValueChange={(value) => setFormData({...formData, industry: value})}
+            style={styles.picker}
+          >
+            <Picker.Item label="Select industry" value="" />
+            <Picker.Item label="Technology" value="technology" />
+            <Picker.Item label="Healthcare" value="healthcare" />
+            <Picker.Item label="Finance" value="finance" />
+            <Picker.Item label="Education" value="education" />
+            <Picker.Item label="Manufacturing" value="manufacturing" />
+            <Picker.Item label="Retail" value="retail" />
+            <Picker.Item label="Consulting" value="consulting" />
+            <Picker.Item label="Marketing & Advertising" value="marketing" />
+            <Picker.Item label="Real Estate" value="real_estate" />
+            <Picker.Item label="Legal" value="legal" />
+            <Picker.Item label="Non-profit" value="non_profit" />
+            <Picker.Item label="Government" value="government" />
+            <Picker.Item label="Other" value="other" />
+          </Picker>
+        </View>
+      </View>
+    </View>
+  );
+
+  const renderStep4 = () => (
+    <View style={styles.form}>
+      <View style={styles.inputGroup}>
+        <Text style={styles.label}>Years of Experience *</Text>
+        <View style={styles.pickerContainer}>
+          <Picker
+            selectedValue={formData.yearsOfExperience}
+            onValueChange={(value) => setFormData({...formData, yearsOfExperience: value})}
+            style={styles.picker}
+          >
+            <Picker.Item label="Select experience level" value="" />
+            <Picker.Item label="Less than 1 year" value="0-1" />
+            <Picker.Item label="1-2 years" value="1-2" />
+            <Picker.Item label="3-5 years" value="3-5" />
+            <Picker.Item label="6-10 years" value="6-10" />
+            <Picker.Item label="11-15 years" value="11-15" />
+            <Picker.Item label="16-20 years" value="16-20" />
+            <Picker.Item label="20+ years" value="20+" />
+          </Picker>
+        </View>
+      </View>
+
+      <View style={styles.inputGroup}>
+        <Text style={styles.label}>Salary Range</Text>
+        <View style={styles.pickerContainer}>
+          <Picker
+            selectedValue={formData.salaryRange}
+            onValueChange={(value) => setFormData({...formData, salaryRange: value})}
+            style={styles.picker}
+          >
+            <Picker.Item label="Select salary range (optional)" value="" />
+            <Picker.Item label="Under $30,000" value="under_30k" />
+            <Picker.Item label="$30,000 - $50,000" value="30k_50k" />
+            <Picker.Item label="$50,000 - $75,000" value="50k_75k" />
+            <Picker.Item label="$75,000 - $100,000" value="75k_100k" />
+            <Picker.Item label="$100,000 - $150,000" value="100k_150k" />
+            <Picker.Item label="$150,000 - $200,000" value="150k_200k" />
+            <Picker.Item label="Over $200,000" value="over_200k" />
+            <Picker.Item label="Prefer not to say" value="prefer_not_to_say" />
+          </Picker>
+        </View>
+      </View>
+
+      <View style={styles.inputGroup}>
+        <Text style={styles.label}>Review of Employer</Text>
+        <TextInput
+          style={styles.textArea}
+          value={formData.employerReview}
+          onChangeText={(text) => setFormData({...formData, employerReview: text})}
+          placeholder="Share your experience working at this company (optional)"
+          placeholderTextColor={isDark ? '#6b7280' : '#9ca3af'}
+          multiline
+          numberOfLines={4}
+        />
+      </View>
+
+      <View style={styles.inputGroup}>
+        <Text style={styles.label}>LinkedIn Profile</Text>
+        <TextInput
+          style={styles.input}
+          value={formData.linkedinProfile}
+          onChangeText={(text) => setFormData({...formData, linkedinProfile: text})}
+          placeholder="https://linkedin.com/in/yourprofile (optional)"
+          placeholderTextColor={isDark ? '#6b7280' : '#9ca3af'}
+          autoCapitalize="none"
         />
       </View>
     </View>
@@ -432,8 +485,29 @@ export default function RegisterScreen() {
             <Text style={[styles.buttonText, styles.buttonTextSecondary]}>Back</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.button}
+            style={[styles.button, !canProceedFromStep2() && styles.buttonDisabled]}
             onPress={nextStep}
+            disabled={!canProceedFromStep2()}
+          >
+            <Text style={styles.buttonText}>Continue</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+
+    if (currentStep === 3) {
+      return (
+        <View style={styles.buttonRow}>
+          <TouchableOpacity
+            style={[styles.button, styles.buttonSecondary]}
+            onPress={prevStep}
+          >
+            <Text style={[styles.buttonText, styles.buttonTextSecondary]}>Back</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, !canProceedFromStep3() && styles.buttonDisabled]}
+            onPress={nextStep}
+            disabled={!canProceedFromStep3()}
           >
             <Text style={styles.buttonText}>Continue</Text>
           </TouchableOpacity>
@@ -450,9 +524,9 @@ export default function RegisterScreen() {
           <Text style={[styles.buttonText, styles.buttonTextSecondary]}>Back</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.button, (!canProceedFromStep2() || loading) && styles.buttonDisabled]}
+          style={[styles.button, (!canProceedFromStep4() || loading) && styles.buttonDisabled]}
           onPress={handleRegister}
-          disabled={!canProceedFromStep2() || loading}
+          disabled={!canProceedFromStep4() || loading}
         >
           <Text style={styles.buttonText}>
             {loading ? 'Creating Account...' : 'Create Account'}
@@ -465,11 +539,13 @@ export default function RegisterScreen() {
   const getStepTitle = () => {
     switch (currentStep) {
       case 1:
-        return 'Personal Information';
+        return 'Account Setup';
       case 2:
         return 'Professional Details';
       case 3:
-        return 'Account Setup';
+        return 'Work Information';
+      case 4:
+        return 'Experience & Review';
       default:
         return 'Create Account';
     }
@@ -478,11 +554,13 @@ export default function RegisterScreen() {
   const getStepSubtitle = () => {
     switch (currentStep) {
       case 1:
-        return 'Tell us a bit about yourself';
+        return 'Set up your basic account information';
       case 2:
-        return 'Share your professional background';
+        return 'Tell us about your current role';
       case 3:
-        return 'Set up your login credentials';
+        return 'Share your work location and industry';
+      case 4:
+        return 'Experience level and employer feedback';
       default:
         return 'Join our community today';
     }
@@ -496,7 +574,10 @@ export default function RegisterScreen() {
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <View style={styles.imagePlaceholder}>
-            <Text style={styles.imagePlaceholderText}>Your Logo{'\n'}Here</Text>
+            <Image 
+              source={require('@/assets/images/JOBSEEK.png')} 
+              style={{ width: 120, height: 120, borderRadius: 20 }} 
+            />
           </View>
           <Text style={styles.title}>{getStepTitle()}</Text>
           <Text style={styles.subtitle}>{getStepSubtitle()}</Text>
@@ -507,6 +588,7 @@ export default function RegisterScreen() {
         {currentStep === 1 && renderStep1()}
         {currentStep === 2 && renderStep2()}
         {currentStep === 3 && renderStep3()}
+        {currentStep === 4 && renderStep4()}
 
         <View style={styles.buttonContainer}>
           {renderButtons()}
