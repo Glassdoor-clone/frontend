@@ -85,7 +85,7 @@ export default function LoginScreen() {
       fontSize: 16,
       color: isDark ? '#a3a3a3' : '#666666',
       textAlign: 'center',
-      fontFamily: 'Poppins',
+      fontFamily: 'Inter',
     },
     form: {
       marginBottom: 32,
