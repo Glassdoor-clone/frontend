@@ -27,7 +27,7 @@ const SearchBar = ({ placeholder = "Search jobs, companies...", onPress }) => {
       flex: 1,
       marginLeft: 8,
       color: isDark ? '#ffffff' : '#000000',
-      fontSize: 16,
+      fontSize: 15,
     },
   });
 

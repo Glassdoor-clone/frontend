@@ -22,17 +22,17 @@ const Header = () => {
     container: {
       paddingTop: isIOS ? 44 : isAndroid ? StatusBar.currentHeight || 0 : 0,
       backgroundColor: isDark ? '#171717' : '#ffffff',
-      borderBottomWidth: 0, // ✅ remove any bottom border
-      shadowColor: 'transparent', // ✅ remove shadow
-      elevation: 0, // ✅ remove Android shadow
-      zIndex: 10, // keep it above
+      borderBottomWidth: 0,
+      shadowColor: 'transparent', // remove shadow
+      elevation: 0, // remove Android shadow
+      zIndex: 10, 
     },
     header: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      paddingHorizontal: 24,
-      paddingVertical: 16,
+      paddingHorizontal: 23,
+      paddingVertical: 15,
     },
     logo: {
       fontSize: 22,

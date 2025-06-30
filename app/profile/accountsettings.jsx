@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 import { useState } from 'react';
 import {
@@ -13,6 +14,7 @@ import {
 const AccountSettingsPage = () => {
   const systemColorScheme = useColorScheme();
   const [themeOverride, setThemeOverride] = useState(null);
+  const router = useRouter();
   
   // Use override if set, otherwise fall back to system
   const isDarkMode = themeOverride !== null ? themeOverride === 'dark' : systemColorScheme === 'dark';
@@ -72,6 +74,7 @@ const AccountSettingsPage = () => {
         <TouchableOpacity 
           style={styles.backButton}
           activeOpacity={0.7}
+          onPress={() => router.back()}
         >
           <ChevronLeft size={24} color={theme.iconColor} />
         </TouchableOpacity>
