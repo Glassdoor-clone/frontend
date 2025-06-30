@@ -7,10 +7,11 @@ import {
   Appearance,
   Linking,
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 
@@ -170,136 +171,138 @@ const ProfilePage = () => {
         <View style={styles.headerRight} />
       </View>
 
-      <View style={styles.section}>
-        <TouchableOpacity onPress={() => router.push('/profile/editUser/editDetails')} style={styles.infoSection}>
-          <View style={styles.infoContent}>
-            <Text style={styles.sectionTitle}>My information</Text>
-            <Text style={styles.sectionSubtitle}>
-              Get the best job matches and a more relevant community experience.
-            </Text>
-          </View>
-          <Feather name="chevron-right" size={20} color={styles.secondaryText.color} />
-        </TouchableOpacity>
-      </View>
-
-      <View style={styles.fieldsContainer}>
-        <View style={styles.fieldRow}>
-          <Text style={styles.fieldLabel}>Full name</Text>
-          <Text style={styles.fieldValue}>{userData?.fullName || 'Not provided'}</Text>
-        </View>
-        
-        <View style={styles.fieldRow}>
-          <Text style={styles.fieldLabel}>Email</Text>
-          <Text style={styles.fieldValue}>{userData?.email || 'Not provided'}</Text>
+      <ScrollView>
+        <View style={styles.section}>
+          <TouchableOpacity onPress={() => router.push('/profile/editUser/editDetails')} style={styles.infoSection}>
+            <View style={styles.infoContent}>
+              <Text style={styles.sectionTitle}>My information</Text>
+              <Text style={styles.sectionSubtitle}>
+                Get the best job matches and a more relevant community experience.
+              </Text>
+            </View>
+            <Feather name="chevron-right" size={20} color={styles.secondaryText.color} />
+          </TouchableOpacity>
         </View>
 
-        <View style={styles.fieldRow}>
-          <Text style={styles.fieldLabel}>Employment status</Text>
-          <Text style={styles.fieldValue}>{getEmploymentStatus()}</Text>
-        </View>
-
-        <View style={styles.fieldRow}>
-          <Text style={styles.fieldLabel}>Current position</Text>
-          <Text style={styles.fieldValue}>{userData?.jobTitle || 'Not specified'}</Text>
-        </View>
-
-        <View style={styles.fieldRow}>
-          <Text style={styles.fieldLabel}>Current employer</Text>
-          <Text style={styles.fieldValue}>
-            {userData?.employerName ? 
-              (userData.employerName.length > 30 ? 
-                userData.employerName.substring(0, 30) + '...' : 
-                userData.employerName
-              ) : 'Not specified'
-            }
-          </Text>
-        </View>
-
-        <View style={styles.fieldRow}>
-          <Text style={styles.fieldLabel}>Current location</Text>
-          <Text style={styles.fieldValue}>{userData?.location || 'Not specified'}</Text>
-        </View>
-
-        <View style={styles.fieldRow}>
-          <Text style={styles.fieldLabel}>Industry</Text>
-          <Text style={styles.fieldValue}>{getIndustryDisplay()}</Text>
-        </View>
-
-        <View style={styles.fieldRow}>
-          <Text style={styles.fieldLabel}>Years of experience</Text>
-          <Text style={styles.fieldValue}>{getExperienceDisplay()}</Text>
-        </View>
-
-        {userData?.gender && (
+        <View style={styles.fieldsContainer}>
           <View style={styles.fieldRow}>
-            <Text style={styles.fieldLabel}>Gender</Text>
+            <Text style={styles.fieldLabel}>Full name</Text>
+            <Text style={styles.fieldValue}>{userData?.fullName || 'Not provided'}</Text>
+          </View>
+          
+          <View style={styles.fieldRow}>
+            <Text style={styles.fieldLabel}>Email</Text>
+            <Text style={styles.fieldValue}>{userData?.email || 'Not provided'}</Text>
+          </View>
+
+          <View style={styles.fieldRow}>
+            <Text style={styles.fieldLabel}>Employment status</Text>
+            <Text style={styles.fieldValue}>{getEmploymentStatus()}</Text>
+          </View>
+
+          <View style={styles.fieldRow}>
+            <Text style={styles.fieldLabel}>Current position</Text>
+            <Text style={styles.fieldValue}>{userData?.jobTitle || 'Not specified'}</Text>
+          </View>
+
+          <View style={styles.fieldRow}>
+            <Text style={styles.fieldLabel}>Current employer</Text>
             <Text style={styles.fieldValue}>
-              {userData.gender.charAt(0).toUpperCase() + userData.gender.slice(1)}
+              {userData?.employerName ? 
+                (userData.employerName.length > 30 ? 
+                  userData.employerName.substring(0, 30) + '...' : 
+                  userData.employerName
+                ) : 'Not specified'
+              }
             </Text>
           </View>
-        )}
 
-        {userData?.linkedinProfile && (
-          <View style={[styles.fieldRow, { borderBottomWidth: 0 }]}>
-            <Text style={styles.fieldLabel}>LinkedIn</Text>
-            <TouchableOpacity onPress={() => Linking.openURL(userData.linkedinProfile)}>
-              <Text style={[styles.fieldValue, { color: '#10b981', textDecorationLine: 'underline' }]}>
-                View Profile
-              </Text>
-            </TouchableOpacity>
+          <View style={styles.fieldRow}>
+            <Text style={styles.fieldLabel}>Current location</Text>
+            <Text style={styles.fieldValue}>{userData?.location || 'Not specified'}</Text>
           </View>
-        )}
-      </View>
 
-      <View style={styles.resumeSection}>
-        <Text style={styles.resumeTitle}>Resume</Text>
-        <Text style={styles.resumeDescription}>
-          After you upload a resume, it will be used to pre-fill job applications that you submit via Easy Apply. You can also make your resume visible or not visible to employers that are currently hiring. See our{' '}
-          <Text style={styles.privacyLink} onPress={handlePrivacyPolicyPress}>
-            Privacy Policy
-          </Text>{' '}
-          for more info.
-        </Text>
-
-        <TouchableOpacity style={styles.uploadButton} onPress={handleFileUpload}>
-          <Feather name="upload" size={20} color={styles.text.color} />
-          <View style={styles.uploadTextContainer}>
-            <Text style={styles.uploadTitle}>
-              {(uploadedFile || userData?.resume) ? 'Update Resume' : 'Upload Resume'}
-            </Text>
-            <Text style={styles.uploadSubtitle}>Use a pdf, docx, doc, rtf and txt</Text>
+          <View style={styles.fieldRow}>
+            <Text style={styles.fieldLabel}>Industry</Text>
+            <Text style={styles.fieldValue}>{getIndustryDisplay()}</Text>
           </View>
-        </TouchableOpacity>
 
-        {(uploadedFile || userData?.resume) && (
-          <View style={styles.fileContainer}>
-            <View style={styles.fileIcon}>
-              <Text style={styles.fileIconText}>📄</Text>
-            </View>
-            <View style={styles.fileInfo}>
-              <Text style={styles.fileName}>
-                {uploadedFile?.name || userData?.resume?.name || 'Resume'}
-              </Text>
-              <Text style={styles.fileSize}>
-                {(() => {
-                  const size = uploadedFile?.size || userData?.resume?.size;
-                  return size ? `${(size / 1024 / 1024).toFixed(2)} MB` : 'Unknown size';
-                })()}
+          <View style={styles.fieldRow}>
+            <Text style={styles.fieldLabel}>Years of experience</Text>
+            <Text style={styles.fieldValue}>{getExperienceDisplay()}</Text>
+          </View>
+
+          {userData?.gender && (
+            <View style={styles.fieldRow}>
+              <Text style={styles.fieldLabel}>Gender</Text>
+              <Text style={styles.fieldValue}>
+                {userData.gender.charAt(0).toUpperCase() + userData.gender.slice(1)}
               </Text>
             </View>
-          </View>
-        )}
-      </View>
+          )}
 
-      {userData?.employerReview && (
-        <View style={styles.reviewSection}>
-          <Text style={styles.resumeTitle}>Employer Review</Text>
-          <View style={styles.reviewContainer}>
-            <Text style={styles.reviewText}>{userData.employerReview}</Text>
-            <Text style={styles.reviewEmployer}>- {userData.employerName}</Text>
-          </View>
+          {userData?.linkedinProfile && (
+            <View style={[styles.fieldRow, { borderBottomWidth: 0 }]}>
+              <Text style={styles.fieldLabel}>LinkedIn</Text>
+              <TouchableOpacity onPress={() => Linking.openURL(userData.linkedinProfile)}>
+                <Text style={[styles.fieldValue, { color: '#10b981', textDecorationLine: 'underline' }]}>
+                  View Profile
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
-      )}
+
+        <View style={styles.resumeSection}>
+          <Text style={styles.resumeTitle}>Resume</Text>
+          <Text style={styles.resumeDescription}>
+            After you upload a resume, it will be used to pre-fill job applications that you submit via Easy Apply. You can also make your resume visible or not visible to employers that are currently hiring. See our{' '}
+            <Text style={styles.privacyLink} onPress={handlePrivacyPolicyPress}>
+              Privacy Policy
+            </Text>{' '}
+            for more info.
+          </Text>
+
+          <TouchableOpacity style={styles.uploadButton} onPress={handleFileUpload}>
+            <Feather name="upload" size={20} color={styles.text.color} />
+            <View style={styles.uploadTextContainer}>
+              <Text style={styles.uploadTitle}>
+                {(uploadedFile || userData?.resume) ? 'Update Resume' : 'Upload Resume'}
+              </Text>
+              <Text style={styles.uploadSubtitle}>Use a pdf, docx, doc, rtf and txt</Text>
+            </View>
+          </TouchableOpacity>
+
+          {(uploadedFile || userData?.resume) && (
+            <View style={styles.fileContainer}>
+              <View style={styles.fileIcon}>
+                <Text style={styles.fileIconText}>📄</Text>
+              </View>
+              <View style={styles.fileInfo}>
+                <Text style={styles.fileName}>
+                  {uploadedFile?.name || userData?.resume?.name || 'Resume'}
+                </Text>
+                <Text style={styles.fileSize}>
+                  {(() => {
+                    const size = uploadedFile?.size || userData?.resume?.size;
+                    return size ? `${(size / 1024 / 1024).toFixed(2)} MB` : 'Unknown size';
+                  })()}
+                </Text>
+              </View>
+            </View>
+          )}
+        </View>
+
+        {userData?.employerReview && (
+          <View style={styles.reviewSection}>
+            <Text style={styles.resumeTitle}>Employer Review</Text>
+            <View style={styles.reviewContainer}>
+              <Text style={styles.reviewText}>{userData.employerReview}</Text>
+              <Text style={styles.reviewEmployer}>- {userData.employerName}</Text>
+            </View>
+          </View>
+        )}
+      </ScrollView>
     </SafeAreaView>
   );
 };
