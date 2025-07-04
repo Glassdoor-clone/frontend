@@ -8,13 +8,6 @@
     "scheme": "jobseek",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-
-    // "splash": {
-    //   "image": "./assets/images/JOBSEEK.png",
-    //   "resizeMode": "cover",
-    //   "backgroundColor": "#0CAA41"
-    // },
-
     "ios": {
       "supportsTablet": true
     },
@@ -23,17 +16,14 @@
         "foregroundImage": "./assets/images/JOBSEEK.png",
         "backgroundColor": "#0CAA41"
       }
-      // "edgeToEdgeEnabled": true
     },
     "web": {
       "favicon": "./assets/images/JOBSEEK.png"
     },
     "plugins": [
       "expo-router",
-      "expo-font"
+      "expo-font",
+      "expo-web-browser"
     ]
-    // "experiments": {
-    //   "typedRoutes": true
-    // }
   }
 }
